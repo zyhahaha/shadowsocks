@@ -46,9 +46,7 @@ spider.on('unensureHash', (hash, addr) => {
             'Content-Length': content.length
         }
     };
-    console.log(content)
     let req = http.request(options, res => {
-        console.log('res');
         res.setEncoding('utf8');
         res.on('data', (chunk) => {
             console.log(`响应主体: ${chunk}`);
