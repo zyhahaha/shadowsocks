@@ -1,9 +1,9 @@
-var http = require('http'),
+let http = require('http'),
     url = require('url'),
     util = require('util'),
     zlib = require('zlib');
 
-var headers = {
+let headers = {
     'accept-charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
     'accept-language': 'en-US,en;q=0.8',
     'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -12,13 +12,13 @@ var headers = {
 };
 
 module.exports = function (torrentUrl, callback) {
-    var torrentUrlObj = url.parse(torrentUrl);
+    let torrentUrlObj = url.parse(torrentUrl);
 
     // 不写referer，有些地址会失败
     // 写了，会出现404错认为200
     //headers['referer'] = util.format('http://%s',torrentUrlObj.hostname);
 
-    var options = {
+    let options = {
         hostname: torrentUrlObj.hostname,
         path: torrentUrlObj.path,
         port: 80,
@@ -29,7 +29,7 @@ module.exports = function (torrentUrl, callback) {
 
     http.request(options, function (res) {
 
-        var chunks = [];
+        let chunks = [];
         res.on('data', function (chunk) {
             chunks.push(chunk);
         });
@@ -40,8 +40,8 @@ module.exports = function (torrentUrl, callback) {
                 return;
             }
 
-            var buffer = Buffer.concat(chunks);
-            var encoding = res.headers['content-encoding'];
+            let buffer = Buffer.concat(chunks);
+            let encoding = res.headers['content-encoding'];
             if (encoding === 'gzip') {
                 zlib.gunzip(buffer, function (err, decoded) {
                     callback(err, decoded);

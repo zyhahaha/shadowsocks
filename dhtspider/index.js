@@ -15,13 +15,46 @@
 //     console.log(data);
 // })
 
-
+const http = require('http');
 const spider = new (require('./lib/spider'))
 
-// spider.on('ensureHash', (hash, addr)=> console.log(`magnet:?xt=urn:btih:${hash}`))
+// let options = {
+//     hostname: 'http://localhost',
+//     path: '/bt/create',
+//     port: 8888,
+//     method: 'POST'
+//     // secureProtocol: 'SSLv3_method',
+//     // headers: headers
+// };
+// http.request(options, res => {
+//     console.log(res);
+// })
 
-// spider.on('unensureHash', (hash)=> console.log(hash))
-
-// spider.on('nodes', (nodes)=>console.log('foundNodes'))
+spider.on('unensureHash', (hash, addr) => {
+    let content = JSON.stringify({
+        hash,
+        name: 'test'
+    })
+    let options = {
+        hostname: 'localhost',
+        path: '/bt/create',
+        port: 8888,
+        method: 'POST',
+        // secureProtocol: 'SSLv3_method',
+        headers: {
+            'Content-Type': 'application/json;charset=UTF-8',
+            'Content-Length': content.length
+        }
+    };
+    console.log(content)
+    let req = http.request(options, res => {
+        console.log('res');
+        res.setEncoding('utf8');
+        res.on('data', (chunk) => {
+            console.log(`响应主体: ${chunk}`);
+        });
+    })
+    req.write(content);
+})
 
 spider.listen(6339)
