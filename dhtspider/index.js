@@ -1,7 +1,3 @@
-// 'use strict'
-
-// module.exports = require('./lib/spider')
-
 // const util = require('util');
 // const download = require('./common/download.js');
 
@@ -17,19 +13,6 @@
 
 const http = require('http');
 const spider = new (require('./lib/spider'))
-
-// let options = {
-//     hostname: 'http://localhost',
-//     path: '/bt/create',
-//     port: 8888,
-//     method: 'POST'
-//     // secureProtocol: 'SSLv3_method',
-//     // headers: headers
-// };
-// http.request(options, res => {
-//     console.log(res);
-// })
-
 spider.on('unensureHash', (hash, addr) => {
     let content = JSON.stringify({
         hash,
@@ -54,5 +37,4 @@ spider.on('unensureHash', (hash, addr) => {
     })
     req.write(content);
 })
-
 spider.listen(6339)
