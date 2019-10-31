@@ -11,30 +11,36 @@
 //     console.log(data);
 // })
 
-const http = require('http');
-const spider = new (require('./lib/spider'))
-spider.on('unensureHash', (hash, addr) => {
-    let content = JSON.stringify({
-        hash,
-        name: 'test'
-    })
-    let options = {
-        hostname: 'localhost',
-        path: '/bt/create',
-        port: 8888,
-        method: 'POST',
-        // secureProtocol: 'SSLv3_method',
-        headers: {
-            'Content-Type': 'application/json;charset=UTF-8',
-            'Content-Length': content.length
-        }
-    };
-    let req = http.request(options, res => {
-        res.setEncoding('utf8');
-        res.on('data', (chunk) => {
-            console.log(`响应主体: ${chunk}`);
-        });
-    })
-    req.write(content);
-})
-spider.listen(6339)
+// const http = require('http');
+// const spider = new (require('./lib/spider'))
+// spider.on('unensureHash', (hash, addr) => {
+//     let content = JSON.stringify({
+//         hash,
+//         name: 'test'
+//     })
+//     let options = {
+//         hostname: 'localhost',
+//         path: '/bt/create',
+//         port: 8888,
+//         method: 'POST',
+//         // secureProtocol: 'SSLv3_method',
+//         headers: {
+//             'Content-Type': 'application/json;charset=UTF-8',
+//             'Content-Length': content.length
+//         }
+//     };
+//     let req = http.request(options, res => {
+//         res.setEncoding('utf8');
+//         res.on('data', (chunk) => {
+//             console.log(`响应主体: ${chunk}`);
+//         });
+//     })
+//     req.write(content);
+// })
+// spider.listen(6339)
+
+const fs = require('fs');
+const torrent = require('./common/torrent.js');
+
+torrentData = torrent(fs.readFileSync('./assets/01.torrent'));
+console.log(torrentData);

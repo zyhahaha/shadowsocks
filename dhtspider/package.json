@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/alanyang/dhtspider#readme",
   "dependencies": {
-    "bencode": "^0.9.0"
+    "bencode": "^0.9.0",
+    "lodash": "^4.17.15"
   }
 }

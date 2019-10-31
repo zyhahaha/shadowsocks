@@ -17,13 +17,13 @@ module.exports = function (torrentData) {
         let fileListAndSize = getFileListAndSize(dataInfo.files);
         return {
             // 种子文件名
-            n: (dataInfo['name.utf-8'] || dataInfo['name']).toString(),
+            name: (dataInfo['name.utf-8'] || dataInfo['name']).toString(),
             // 主文件类型
-            t: getFileType(dataInfo.files),
+            type: getFileType(dataInfo.files),
             // 包含的文件列表
-            f: fileListAndSize.list,
+            fileList: fileListAndSize.list,
             // 总大小
-            s: fileListAndSize.size
+            size: fileListAndSize.size
         };
     } else {
         let name = (dataInfo['name.utf-8'] || dataInfo['name']).toString(),
@@ -31,13 +31,13 @@ module.exports = function (torrentData) {
             type = _split.length <= 0 ? '' : _split[_split.length - 1];
 
         return {
-            n: name,
-            t: type,
-            f: {
-                n: name,
-                s: dataInfo.length
+            name,
+            type,
+            fileList: {
+                name,
+                size: dataInfo.length
             },
-            s: dataInfo.length
+            size: dataInfo.length
         };
     }
 };
@@ -50,8 +50,8 @@ getFileListAndSize = function (list) {
     list.map(function (currentValue) {
         let names = currentValue['path.utf-8'] || currentValue['path'],
             item = {
-                s: currentValue.length, // 文件大小
-                n: names[names.length - 1].toString() // 文件名
+                size: currentValue.length, // 文件大小
+                name: names[names.length - 1].toString() // 文件名
             };
 
         result.unshift(item);
